@@ -1,5 +1,5 @@
 import '../App.css'
-
+import CartWidget from './CartWidget';
 function NavBar() {
     return(
         <header className='NavBar'>
@@ -8,7 +8,8 @@ function NavBar() {
             <ul className= 'uls'>
                 <li>Log In</li>
                 <li>Inicio</li>
-                <li>Carrito</li>
+                <li><CartWidget/></li>
+                
             </ul>
         </div>
     </header>
