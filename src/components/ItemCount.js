@@ -18,9 +18,9 @@ function ItemCount(props) {
 
     return(
         <>
-            <h3>Contador</h3>
+            <h3>Productos</h3>
             <button onClick={ handleDecrement }> - </button> 
-            <h3>Clicks: {clicks}</h3>
+            <h3> {clicks}</h3>
             <button onClick={ handleIncrement }> + </button>
             <button onClick={onAdd}> Comprar </button>
 
