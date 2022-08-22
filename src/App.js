@@ -10,6 +10,7 @@ function App() {
       <ItemListContainer greeting="Productos Destacados" />
       <ItemCount />
       <ItemListContainer />
+      <ItemDetailContainer greeting="Item Detail Container"/>
     </div></>
   );
 }

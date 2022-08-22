@@ -10,8 +10,8 @@ function ItemList ({data}) {
                     <Item
                         key={producto.id}
                         img={producto.img}
-                        nombre={producto.nombre}
-                        precio={producto.precio} />
+                        title={producto.title}
+                        price={producto.price} />
                 );
             })}
         </><section>
@@ -23,8 +23,8 @@ function ItemList ({data}) {
                                 <Item
                                     key={producto.id}
                                     img={producto.img}
-                                    nombre={producto.nombre}
-                                    precio={producto.precio} />
+                                    title={producto.title}
+                                    price={producto.price} />
                             );
                         })}
                     </article>
