@@ -1,9 +1,32 @@
 import React from "react"
+import productos from "../data"
+import ItemList from "../components/ItemList"
 
-function ItemListContainer(props) {
-    return(
-        <h1>Productos</h1>
-    )
+function getProductos() {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(productos), 2000)
+    })
 }
+function ItemListContainer(props) {
+function ItemListContainer() {
+    const [data, setData] = React.useState([]);
 
-export default ItemListContainer
+    React.useEffect(() => {
+        getProductos().then((respuesta) => {
+            setData(respuesta);
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }, []);
+
+    
+    return(
+        <>
+        <h2 className='ItemListCont'>{props.greeting}</h2>
+        <ItemList data={data}/>
+            <ItemList data={data}/>
+        </>
+    )
+}}
+export default ItemListContainer;
