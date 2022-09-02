@@ -1,31 +1,45 @@
 import React from "react";
+import React, {useState} from "react";
 
 function ItemCount(props) {
-    console.log( props.stock, props.initial );
-    
-    const [clicks, setClicks] = React.useState(1);
-    
+
+    const [clicks, setClicks] = useState(1);
+    const [quantity, setQuantity] = useState(1);
+
     const handleIncrement= () => {
-        setClicks(clicks + 1);
+        if (clicks < props.stock) {
+            setClicks(clicks + 1);
+        if (quantity < props.stock) {
+            setQuantity(quantity + 1);
+        } else {
+            alert("Lo sentimos. No hay más stock")
+        }
     }
     const handleDecrement= () => {
-        setClicks(clicks - 1);
+        if (clicks > props.initial) {
+            setClicks(clicks - 1);
+        if (quantity > props.initial) {
+            setQuantity(quantity - 1);
+        } else {
+            alert("No puede seleccionar una cantidad menor a 1")
+        }
     }
-
-    const onAdd = () => {
-        console.log("Añadido al carrito")
-    }
-
+}}
     return(
         <>
-            <h3>Productos</h3>
-            <button onClick={ handleDecrement }> - </button> 
-            <h3> {clicks}</h3>
-            <button onClick={ handleIncrement }> + </button>
-            <button onClick={onAdd}> Comprar </button>
-
+            <div className="ItemCount">
+                <div className="clicks">
+                <div className="quantity">
+                    <button onClick={ handleDecrement }> - </button> 
+                    <h3> {clicks}</h3>
+                    <h3> {quantity}</h3>
+                    <button onClick={ handleIncrement }> + </button>
+                </div>
+                <button className="comprar" onClick={props.onAdd(clicks)}> Añadir al carrito </button>
+                <button className="comprar" onClick={()=>props.onAdd(quantity)}> Añadir al carrito </button>
+            </div>
         </>
     )
-}
+
 
 export default ItemCount;

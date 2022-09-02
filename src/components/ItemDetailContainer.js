@@ -1,31 +1,52 @@
 import React from "react";
+import React, {useState, useEffect} from "react";
 import productos from "../data";
 import ItemDetail from "../components/ItemDetail";
+import {useParams} from "react-router-dom"
 
-function getProducto() {
-    return new Promise( (resolve) => {
-        setTimeout( () => resolve(productos[0]), 3000)
-    })
-};  
+import firestoreDB from "../services/firestore";
+import { getDocs, collection } from "firebase/firestore";
 
-function ItemDetailContainer(props) {
-    const [data, setData] = React.useState([]);
+function ItemDetailContainer() {
+    const [item, setItem] = useState([]);
+    const {id} = useParams();
 
-    React.useEffect(() => {
+    function getProducto() {
+    function getProductosfromDB() {
+        return new Promise( (resolve) => {
+           resolve(productos)
+
+            const productosCollection = collection(firestoreDB, "productos")
+
+            getDocs(productosCollection).then(snapshot => {
+                const docsData = snapshot.docs.map( doc => {
+                    return {...doc.data(), id: doc.id}
+                })
+                resolve(docsData);
+            })
+        })
+    };  
+    };
+
+    useEffect(()=> {
         getProducto().then((respuesta) => {
-            setData(respuesta);
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }, []);
-
+        getProductosfromDB().then((respuesta) => {
+            let itemEncontrado = respuesta.find ((element)=> element.id === id);
+            if(id === undefined) {
+                setItem(respuesta); 
+            } else {
+                setItem(itemEncontrado);
+                
+            }
+    });
+    }, [id]);
     return(
         <>
-        <h2 className='ItemListCont'>{props.greeting}</h2>
-        <ItemDetail img={data.img} nombre={data.title} precio={data.price}/>
+        <h2 className='ItemListCont'>Item Detail Container</h2>
+        <ItemDetail id={item.id} nombre={item.nombre} precio={item.precio} img={item.img} stock={item.stock}/>
         </>
     )
+}
 }
 
 export default ItemDetailContainer; 
